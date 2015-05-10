@@ -48,18 +48,19 @@ class GitLogConverter(object):
                 merged_diff = diff
             else:
                 merged_diff.merge(diff)
-        for patch in merged_diff:
-            patch_dict = {
-                "old_file_path": patch.old_file_path,
-                "new_file_path": patch.new_file_path,
-                "old_id": str(patch.old_id),
-                "new_id": str(patch.new_id),
-                "status": patch.status,
-                "similarity": patch.similarity,
-                "additions": patch.additions,
-                "deletions": patch.deletions,
-            }
-            patches.append(patch_dict)
+        if merged_diff is not None:
+            for patch in merged_diff:
+                patch_dict = {
+                    "old_file_path": patch.old_file_path,
+                    "new_file_path": patch.new_file_path,
+                    "old_id": str(patch.old_id),
+                    "new_id": str(patch.new_id),
+                    "status": patch.status,
+                    "similarity": patch.similarity,
+                    "additions": patch.additions,
+                    "deletions": patch.deletions,
+                }
+                patches.append(patch_dict)
         return commit_dict
 
     def print_commits_as_json(self, file=sys.stdout):
