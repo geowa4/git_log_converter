@@ -13,14 +13,19 @@ Usage
 -----
 
 ```
-# to a file
-./git_log_converter.py --repo /path/to/repo repo.json-dump
-
-# to stdout
-./git_log_converter.py --repo /path/to/repo -
+./git_log_converter.py --repo /path/to/repo
 ```
 
-For all options, use `./git_log_converter.py -h`.
+That will write to stdout, which can be easily redirected to a file.
+
+Alternatively, this can be combined with `json_log_to_db.py` to write to a database.
+Before writing to a database, you'll need to have a driver like psycopg2 installed.
+
+```
+./git_log_converter.py --repo /path/to/repo | ./json_log_to_db.py --connection-string <conn_string> -
+```
+
+For all options, use `./git_log_converter.py -h` and `./json_log_to_db.py -h`.
 
 Contributing
 ------------

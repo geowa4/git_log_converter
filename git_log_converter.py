@@ -53,6 +53,7 @@ class GitLogConverter(object):
                 patch_dict = {
                     "old_file_path": patch.old_file_path,
                     "new_file_path": patch.new_file_path,
+                    "is_binary": patch.is_binary,
                     "old_id": str(patch.old_id),
                     "new_id": str(patch.new_id),
                     "status": patch.status,
@@ -80,17 +81,8 @@ if __name__ == '__main__':
         "--repo", required=True,
         help="The path to the Git repository.",
     )
-    parser.add_argument(
-        "file",
-        help="The file to print the JSON; use '-' for STDOUT.",
-    )
     args = parser.parse_args()
 
-    if args.file == "-":
-        output = sys.stdout
-    else:
-        output = open(args.file, mode='w')
-
     converter = GitLogConverter(args.repo)
-    converter.print_commits_as_json(output)
+    converter.print_commits_as_json()
     sys.stderr.close()
